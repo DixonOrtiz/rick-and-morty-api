@@ -11,12 +11,11 @@ const connectionParams = {
 
 const connect = async () => {
   try {
-    const db = await mongoose.connect(dbUrl, connectionParams);
-    console.log(db);
-    return '[rick-and-morty-api][db] successful connection to the database';
+    await mongoose.connect(dbUrl, connectionParams);
+    return '[rick-and-morty-api][db] Successful connection to the database';
   } catch (error) {
     throw new Error(
-      `[rick-and-morty-api][db][error] could not connect to the database \n${error}`
+      `[rick-and-morty-api][db][error] Could not connect to the database \n${error}`
     );
   }
 };
