@@ -1,11 +1,12 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
+const { JWT_SECRET } = require('../config/env.js');
 const {
   registerValidation,
   loginValidation,
 } = require('../helpers/joi-validations');
-const { JWT_SECRET } = require('../config/env.js');
+const { validate } = require('../model/user');
 
 // Register controller
 const register = async (request, response) => {
@@ -15,11 +16,10 @@ const register = async (request, response) => {
 
   // User existence validation
   const doesUserExists = await User.exists({ email: request.body.email });
-  if (doesUserExists) {
+  if (doesUserExists)
     return response
       .status(409)
       .send(`The user with email '${request.body.email}' already exists`);
-  }
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
